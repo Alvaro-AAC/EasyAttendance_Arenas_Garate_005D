@@ -1,0 +1,35 @@
+<ion-menu contentId="menuComponent" menuId="miMenu" side="end" type="overlay" [disabled]="isDisabled">
+  <ion-header>
+    <ion-toolbar class="menu-special">
+      <ion-title>Menu de opciones</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content id="menu-fondo">
+
+    <ion-item *ngFor="let item of allMenuItems" [routerLink]="item.href">
+      <ion-icon [name]="item.icon" slot="start"></ion-icon>
+      <ion-label>{{item.label}}</ion-label>
+    </ion-item>
+
+  </ion-content>
+  <ion-footer class="menu-special">
+
+     <ng-container *ngIf="isLoged; then logeado else notLogeado">
+     </ng-container>
+
+     <ng-template #logeado>
+      <ion-item>
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-item>
+     </ng-template>
+
+     <ng-template #notLogeado>
+      <ion-item href="/login">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        <ion-label>Iniciar sesión</ion-label>
+      </ion-item>
+     </ng-template>
+
+  </ion-footer>
+</ion-menu>

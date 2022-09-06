@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Easy Attendance</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="fondo">
+  <div *ngIf="logedBool; then loged else notLoged"></div>
+    <ng-template #notLoged>
+      <div id="centrar">
+        <h1>
+          Bienvenido
+          <br>
+          a
+          <br>
+          Easy Attendance
+        </h1>
+        <ion-icon name="scan-circle-outline" style="font-size: 64px;"></ion-icon>
+        <ion-button routerLink="/login" expand="block" fill="solid" shape="round" id="botonIngresar">
+          Registrarse
+        </ion-button>
+      </div>
+    </ng-template>
+    <ng-template #loged>
+      <div id="centrar">
+        <h1>Benvenido {{user}}</h1>
+        <ion-icon name="scan-circle-outline" style="font-size: 64px;"></ion-icon>
+        <ion-button routerLink="/menu" expand="block" fill="solid" shape="round" id="botonIngresar">
+          Ingresar
+        </ion-button>
+      </div>
+    </ng-template>
+</ion-content>

@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="fondo">
+  <h1 class="ion-text-center">Noticias</h1>
+  <ion-card *ngFor="let tweet of tweetCards">
+    <ion-card-header>
+      <ion-card-subtitle>{{tweet.fecha}}</ion-card-subtitle>
+      <ion-card-title><a [href]="tweet.userHref" [innerHTML]="tweet.user"></a>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content [innerHTML]="tweet.content">
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

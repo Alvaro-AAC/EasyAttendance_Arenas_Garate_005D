@@ -24,3 +24,44 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+#fondo {
+  --background: #002B5B;
+  margin-top: 50px;
+}
+
+ion-toolbar {
+  --color: var(--ion-color-dark-contrast);
+  --background: var(--ion-color-dark);
+}
+
+ion-item, ion-icon {
+  --color: var(--ion-color-dark-contrast);
+  --background: var(--ion-color-dark);
+  color: var(--ion-color-dark-contrast);
+}
+
+h1, p {
+  color: var(--ion-color-dark-contrast);
+}
+
+#centrar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+bg-transparent {
+  --background: transparent;
+  background: transparent;
+}
+
+ion-header ion-toolbar {
+  --background: #8FE3CF;
+  color: black;
+  font-style: bold;
+}

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="ios" text="Volver" color="primary" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="padding-right: 5rem;">Easy Attendance</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="fondo">
+  <div id="centrar">
+    <h1>
+      Eassy Attendance
+      <br>
+      Inicio de sesión
+    </h1>
+
+    <form (ngSubmit)="onSubmit()" id="formulario">
+      <ion-item class="formcontrol" routerLink="/duoc-login">
+        <ion-icon name="cloud-outline" slot="start"></ion-icon>
+        <ion-label>Iniciar con DuocUC</ion-label>
+      </ion-item>
+      <ion-item class="formcontrol">
+        <ion-label position="floating">Usuario</ion-label>
+        <ion-input id="user" [(ngModel)]="user"  class="forminput" [ngModelOptions]="{ standalone: true }"></ion-input>
+      </ion-item>
+      <ion-item class="formcontrol">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" id="pwd" [(ngModel)]="pwd"  clearOnEdit="false" class="forminput" [ngModelOptions]="{ standalone: true }"></ion-input>
+      </ion-item>
+    </form>
+
+    <ion-button expand="block" fill="solid" shape="round" id="subir" color="primary" (click)="login()">
+      Iniciar sesión
+    </ion-button>
+
+  </div>
+</ion-content>

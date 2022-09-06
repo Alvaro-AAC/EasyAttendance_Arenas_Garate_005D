@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="fondo">
+  <ion-item *ngFor="let item of menuItemToggle">
+    <ion-label [id]="item.id">{{item.label}}</ion-label>
+    <ion-toggle slot="end" color="primary"></ion-toggle>
+  </ion-item>
+  <ion-item *ngFor="let item of menuItemCheck">
+    <ion-label [id]="item.id">{{item.label}}</ion-label>
+    <ion-checkbox slot="end"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label>Test Select</ion-label>
+    <ion-select value="test7" multiple="false" placeholder="Selecciona la configuracion">
+      <ion-select-option value="test7">test 7</ion-select-option>
+      <ion-select-option value="test8">test 8</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>

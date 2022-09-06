@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="ios" text="Volver" color="primary" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="padding-right: 5rem;">Easy Attendance</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="fondo">
+  <div id="centrar">
+    <h1>
+      Easy Attendance
+      <br>
+      Inicio de sesión
+      <br>
+      DuocUC
+    </h1>
+
+    <ion-item class="formcontrol">
+      <ion-label position="floating">Usuario </ion-label>
+      <ion-input id="user" [(ngModel)]="user"  class="forminput" [ngModelOptions]="{ standalone: true }"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" fill="solid" shape="round" id="subir" color="primary" (click)="login()">
+      Iniciar sesión
+    </ion-button>
+
+  </div>
+</ion-content>
