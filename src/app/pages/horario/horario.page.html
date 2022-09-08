@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="fondo">
+  <ion-list *ngFor="let dia of dias" class="lista">
+    <ion-item-divider class="titular">
+      <ion-label>{{dia.nombre}}</ion-label>
+    </ion-item-divider>
+    <ion-item *ngFor="let horas of dia.horas" class="itemhora">
+      <ion-label position="start" class="clasehora">{{horas.ini}}-{{horas.fin}}</ion-label>
+      <ion-label position="end" class="clasedesc"><p>{{horas.codigo}}</p><p>{{horas.nombre}}</p></ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-footer>

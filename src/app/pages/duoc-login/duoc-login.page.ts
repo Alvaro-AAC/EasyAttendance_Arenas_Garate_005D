@@ -99,6 +99,10 @@ export class DuocLoginPage implements OnInit {
   }
 
   public login() {
+    if(this.user === '') {
+      this.presentAlert('Campo vacío', 'Debe ingresar los datos solicitados en los campos que se muestran en pantalla.');
+      return false;
+    }
     const url = 'http://129.151.110.110/api/v1/generar_codigo_login/';
     const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
     const response = this.http.post(url, `username=${this.user}&auth=z_gHXCkfMAuv703l_F2J6`, {headers});

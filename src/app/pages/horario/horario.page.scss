@@ -1,0 +1,32 @@
+.lista {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.titular {
+  background: linear-gradient(to right, #8FE3CF 65%, transparent 35%);
+  color: black;
+  font-size: 24px;
+  font-style: bold;
+}
+
+.itemhora {
+  --background: #2B4865;
+}
+
+.clasedesc {
+  font-size: 10px;
+  color: white;
+}
+
+.clasehora {
+  display: inline;
+  color: white;
+}
+
+ion-label {
+  p {
+    color: white;
+  }
+}

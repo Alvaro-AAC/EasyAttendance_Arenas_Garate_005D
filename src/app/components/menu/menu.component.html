@@ -14,22 +14,22 @@
   </ion-content>
   <ion-footer class="menu-special">
 
-     <ng-container *ngIf="isLoged; then logeado else notLogeado">
+     <!-- <ng-container *ngIf="isLoged; then logeado else notLogeado">
      </ng-container>
 
-     <ng-template #logeado>
-      <ion-item>
+     <ng-template #logeado> -->
+      <ion-item (click)="logout()" routerLink="/">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
         <ion-label>Cerrar sesión</ion-label>
       </ion-item>
-     </ng-template>
+     <!-- </ng-template> -->
 
-     <ng-template #notLogeado>
+     <!-- <ng-template #notLogeado>
       <ion-item href="/login">
         <ion-icon name="log-in-outline" slot="start"></ion-icon>
         <ion-label>Iniciar sesión</ion-label>
       </ion-item>
-     </ng-template>
+     </ng-template> -->
 
   </ion-footer>
 </ion-menu>

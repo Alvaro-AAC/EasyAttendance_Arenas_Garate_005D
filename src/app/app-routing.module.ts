@@ -36,8 +36,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/ayuda/ayuda.module').then( m => m.AyudaPageModule)
   },
   {
-    path: 'menu',
-    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+    path: 'horario',
+    loadChildren: () => import('./pages/horario/horario.module').then( m => m.HorarioPageModule)
   },
 ];
 

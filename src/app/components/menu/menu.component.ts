@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalVarsService } from 'src/app/services/global-vars.service';
 
 interface MenuItem {
     icon: string;
@@ -18,6 +19,11 @@ export class MenuComponent implements OnInit {
       icon: 'home-outline',
       label: 'Inicio',
       href: '/'
+    },
+    {
+      icon: 'time-outline',
+      label: 'Horario',
+      href: '/horario'
     },
     {
       icon: 'scan-circle-outline',
@@ -48,6 +54,11 @@ export class MenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  public logout() {
+    GlobalVarsService.loged = 'false';
   }
 
 }

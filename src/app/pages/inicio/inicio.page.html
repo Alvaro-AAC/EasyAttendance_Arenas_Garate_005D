@@ -8,14 +8,9 @@
   <div *ngIf="logedBool; then loged else notLoged"></div>
     <ng-template #notLoged>
       <div id="centrar">
-        <h1>
-          Bienvenido
-          <br>
-          a
-          <br>
-          Easy Attendance
-        </h1>
-        <ion-icon name="scan-circle-outline" style="font-size: 64px;"></ion-icon>
+        <div>
+          <img src="assets/logo.png" style="padding: 0; margin: 0;">
+        </div>
         <ion-button routerLink="/login" expand="block" fill="solid" shape="round" id="botonIngresar">
           Registrarse
         </ion-button>
@@ -23,11 +18,18 @@
     </ng-template>
     <ng-template #loged>
       <div id="centrar">
-        <h1>Benvenido {{user}}</h1>
-        <ion-icon name="scan-circle-outline" style="font-size: 64px;"></ion-icon>
-        <ion-button routerLink="/menu" expand="block" fill="solid" shape="round" id="botonIngresar">
+        <div>
+          <h1>Bienvenido {{user}}</h1>
+          <img src="assets/logo.png" style="padding: 0; margin: 0;">
+        </div>
+        <ion-button routerLink="/horario" expand="block" fill="solid" shape="round" id="botonIngresar">
           Ingresar
         </ion-button>
       </div>
     </ng-template>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-footer>

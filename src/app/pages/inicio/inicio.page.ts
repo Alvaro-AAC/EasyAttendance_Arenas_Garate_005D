@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 import { GlobalVarsService } from 'src/app/services/global-vars.service';
 @Component({
   selector: 'app-inicio',
@@ -8,13 +8,23 @@ import { GlobalVarsService } from 'src/app/services/global-vars.service';
 })
 export class InicioPage implements OnInit {
 
-  public logedBool = new BehaviorSubject(GlobalVarsService.loged);
+  public logedBool;
   public user;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.logedBool.subscribe();
+      this.router.events.subscribe((event: any) => {
+        if(event instanceof NavigationEnd) {
+          if(GlobalVarsService.loged === 'true') {
+            this.logedBool = true;
+            this.user = GlobalVarsService.user;
+          } else {
+            this.logedBool = false;
+            this.user = null;
+          }
+        }
+      });
   }
 
 }
