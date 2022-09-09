@@ -30,11 +30,9 @@ export class AppComponent {
       if(event instanceof NavigationEnd) {
         AppComponent.loged = GlobalVarsService.loged;
         if(AppComponent.loged === 'true') {
-          console.log('loged');
           AppComponent.logedBool = true;
           AppComponent.user = GlobalVarsService.user;
         } else {
-          console.log('notLoged');
           AppComponent.logedBool = false;
         }
       }
