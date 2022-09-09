@@ -31,6 +31,11 @@ export class MenuComponent implements OnInit {
       href: '/scanner'
     },
     {
+      icon: 'clipboard-outline',
+      label: 'Asistencia',
+      href: '/asistencia'
+    },
+    {
       icon: 'newspaper-outline',
       label: 'Noticias',
       href: '/noticias'

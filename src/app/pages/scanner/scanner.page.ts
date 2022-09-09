@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScannerPage implements OnInit {
 
+  public modalAbierto = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public abrir(es: boolean) {
+    this.modalAbierto = es;
   }
 
 }

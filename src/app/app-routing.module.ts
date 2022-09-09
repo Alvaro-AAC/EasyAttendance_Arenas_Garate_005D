@@ -32,12 +32,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/duoc-login/duoc-login.module').then( m => m.DuocLoginPageModule)
   },
   {
+    path: 'horario',
+    loadChildren: () => import('./pages/horario/horario.module').then( m => m.HorarioPageModule)
+  },
+  {
     path: 'ayuda',
     loadChildren: () => import('./pages/ayuda/ayuda.module').then( m => m.AyudaPageModule)
   },
   {
-    path: 'horario',
-    loadChildren: () => import('./pages/horario/horario.module').then( m => m.HorarioPageModule)
+    path: 'asistencia',
+    loadChildren: () => import('./pages/asistencia/asistencia.module').then( m => m.AsistenciaPageModule)
   },
 ];
 

@@ -4,19 +4,25 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="fondo">
-  <ion-item *ngFor="let item of menuItemToggle">
+
+  <ion-item id="itemheader">
+    <ion-label>Ayuda</ion-label>
+  </ion-item>
+
+  <ion-item *ngFor="let item of menuItemToggle" class="menuopt">
+    <ion-icon slot="start" [name]="item.icon"></ion-icon>
     <ion-label [id]="item.id">{{item.label}}</ion-label>
     <ion-toggle slot="end" color="primary"></ion-toggle>
   </ion-item>
-  <ion-item *ngFor="let item of menuItemCheck">
-    <ion-label [id]="item.id">{{item.label}}</ion-label>
-    <ion-checkbox slot="end"></ion-checkbox>
-  </ion-item>
-  <ion-item>
-    <ion-label>Test Select</ion-label>
-    <ion-select value="test7" multiple="false" placeholder="Selecciona la configuracion">
-      <ion-select-option value="test7">test 7</ion-select-option>
-      <ion-select-option value="test8">test 8</ion-select-option>
+
+  <ion-item class="menuopt">
+    <ion-icon slot="start" name="notifications"></ion-icon>
+    <ion-label>Notificaciones</ion-label>
+    <ion-select value="na" multiple="false" placeholder="Selecciona la configuracion">
+      <ion-select-option value="na">Nunca</ion-select-option>
+      <ion-select-option value="diaria">Diarias</ion-select-option>
+      <ion-select-option value="semanal">Semanal</ion-select-option>
+      <ion-select-option value="mensual">Mensual</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-content>

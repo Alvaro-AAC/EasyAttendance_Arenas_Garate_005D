@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="fondo">
+
+  <ion-accordion-group>
+    <ion-accordion *ngFor="let acc of acordiones" [value]="acc.valor">
+      <ion-item slot="header">
+        <ion-label>{{acc.label}}</ion-label>
+      </ion-item>
+      <div class="ion-padding subcategoria" slot="content">
+        <p>N° Clases: {{acc.numtotal}}</p>
+        <p>Asistidas: {{acc.numasist}}</p>
+        <span style="padding: 0 1rem 0 0;">{{acc.porcentaje}}%</span><progress max="100" [value]="acc.porcentaje" slot="end" style="vertical-align: -0.2em;"></progress>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-footer>

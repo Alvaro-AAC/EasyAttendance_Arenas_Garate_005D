@@ -7,10 +7,28 @@
   <h1 class="ion-text-center">Escanear QR</h1>
   <br><br><br>
   <div class="ion-text-center">
-    <ion-button fill="outline" shape="round" color="light">
+    <ion-button fill="outline" shape="round" color="light" (click)="abrir(true)">
       Iniciar escaneo
     </ion-button>
   </div>
+
+
+  <ion-modal [isOpen]="modalAbierto">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Confirmacion</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="abrir(false)">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding fondomodal">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <h1>Presente</h1>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
 
 <ion-footer>

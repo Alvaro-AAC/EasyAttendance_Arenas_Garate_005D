@@ -5,3 +5,15 @@ ion-toggle {
 ion-checkbox {
   --background: white !important;
 }
+
+.menuopt {
+  --background: transparent;
+  margin: 1rem;
+}
+
+#itemheader {
+  --background: linear-gradient(to right, #8FE3CF 65%, transparent 35%);
+  color: black;
+  font-size: 24px;
+  font-style: bold;
+}
