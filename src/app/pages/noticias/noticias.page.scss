@@ -1,0 +1,41 @@
+ion-list {
+  background: transparent;
+}
+
+ion-card {
+  --background: #2b4865;
+  background: #2b4865;
+
+  ion-card-header {
+    ion-card-subtitle {
+      color: white;
+    }
+    ion-card-title {
+      color: white;
+      a {
+        color: lightblue;
+      }
+      a:hover {
+        color: lightblue;
+      }
+    }
+  }
+
+  ion-card-content {
+    color: #8fe3cf;
+    a {
+      color: lightblue;
+    }
+    a:hover {
+      color: lightblue;
+    }
+  }
+}
+
+ion-list-header {
+  background: #2b4865;
+}
+
+.footeritem {
+  --background: #2b4865;
+}

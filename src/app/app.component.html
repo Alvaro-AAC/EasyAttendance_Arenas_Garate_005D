@@ -1,6 +1,51 @@
 <ion-app>
-  <app-header *ngIf="hasHeader"></app-header>
-  <app-menu *ngIf="hasHeader"></app-menu>
+  <app-header *ngIf="hasHeader else headerdos"></app-header>
+
+  <ng-template #headerdos>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="ion-text-center">Easy Attendance</ion-title>
+        <ion-buttons slot="end">
+          <ion-menu-button menu="miMenu"></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+  </ng-template>
+
+  <app-menu *ngIf="hasHeader else menudos"></app-menu>
+
+  <ng-template #menudos>
+    <ion-menu contentId="menuComponent" menuId="miMenu" side="end" type="overlay">
+      <ion-header>
+        <ion-toolbar class="menu-special">
+          <ion-title>Menu de opciones</ion-title>
+          <ion-buttons slot="end">
+            <ion-menu-button menu="miMenu"></ion-menu-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content id="menu-fondo">
+
+        <ion-item routerLink="/">
+          <ion-icon name="home-outline" slot="start"></ion-icon>
+          <ion-label>Inicio</ion-label>
+        </ion-item>
+        <ion-item routerLink="/duoc-login">
+          <ion-icon name="person-add-outline" slot="start"></ion-icon>
+          <ion-label>Registrarse</ion-label>
+        </ion-item>
+
+      </ion-content>
+      <ion-footer class="menu-special">
+          <ion-item routerLink="/login">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            <ion-label>Iniciar sesión</ion-label>
+          </ion-item>
+      </ion-footer>
+    </ion-menu>
+
+  </ng-template>
+
   <app-footer></app-footer>
   <ion-router-outlet id="menuComponent"></ion-router-outlet>
 </ion-app>

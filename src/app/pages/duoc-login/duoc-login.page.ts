@@ -76,6 +76,8 @@ export class DuocLoginPage implements OnInit {
             } else {
               console.log('no validado');
             }
+          } else {
+            console.log('no validado');
           }
         })
         .catch(error => {
@@ -134,7 +136,7 @@ export class DuocLoginPage implements OnInit {
   }
 
   private async checkValidity() {
-    const url = `http://129.151.110.110/api/v1/verified/${this.user}/`;
+    const url = `http://localhost:8000/api/v1/verified/${this.user}/`;
     const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
     const response = this.http.get(url, {headers});
     return await response.toPromise();

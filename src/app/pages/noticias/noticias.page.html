@@ -4,16 +4,34 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="fondo">
-  <h1 class="ion-text-center">Noticias</h1>
-  <ion-card *ngFor="let tweet of tweetCards">
-    <ion-card-header>
-      <ion-card-subtitle>{{tweet.fecha}}</ion-card-subtitle>
-      <ion-card-title><a [href]="tweet.userHref" [innerHTML]="tweet.user"></a>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content [innerHTML]="tweet.content">
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
+
+    <ion-card>
+      <ion-list-header class="ion-text-center">
+        <ion-label><h1>Noticias</h1></ion-label>
+      </ion-list-header>
+    </ion-card>
+
+    <ion-card *ngFor="let tweet of tweetCards">
+      <ion-card-header>
+        <ion-card-subtitle class="ion-text-end">{{tweet.fecha}}</ion-card-subtitle>
+        <ion-card-title><a [href]="tweet.userHref" [innerHTML]="tweet.user"></a>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content [innerHTML]="tweet.content">
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-footer>
+        <ion-item class="ion-text-center footeritem">
+          <ion-icon name="logo-twitter" class="ion-text-center"></ion-icon>
+          <ion-label>@DuocUC</ion-label>
+        </ion-item>
+      </ion-footer>
+    </ion-card>
+
+  </ion-list>
 </ion-content>
 
 <ion-footer>

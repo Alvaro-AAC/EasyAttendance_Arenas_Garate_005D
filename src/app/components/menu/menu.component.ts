@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
     {
       icon: 'home-outline',
       label: 'Inicio',
-      href: '/'
+      href: '/inicio'
     },
     {
       icon: 'time-outline',

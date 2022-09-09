@@ -14,7 +14,7 @@ export class AppComponent {
   public static user;
 
   public hasHeader: boolean;
-  public exemptUrl = []; //['/inicio', '/', '/login', '/duoc-login'];
+  public exemptUrl = ['/inicio', '/', '/login', '/duoc-login'];
 
   constructor(private router: Router, private menu: MenuController) {
     this.router.events.subscribe((event: any) => {
