@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { GlobalVarsService } from 'src/app/services/global-vars.service';
 import { AlertController } from '@ionic/angular';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
-import { AppComponent } from 'src/app/app.component';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-duoc-login',
@@ -20,7 +19,8 @@ export class DuocLoginPage implements OnInit {
   constructor(
     private http: HttpClient,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private storage: Storage,
     ) {
 
     }
@@ -61,18 +61,84 @@ export class DuocLoginPage implements OnInit {
       }
       alert.subHeader = 'Tiempo: 0' + tiempoMins + ':' + parsedSeconds;
       if(val%5 === 0) {
-        this.checkValidity()
-        .then((response: any) => {
-          if(response.status === 'success') {
-            console.log(response);
-            if(response.data.verificado) {
-              GlobalVarsService.user = this.user;
-              GlobalVarsService.loged = 'true';
+
+
+        const url = `http://129.151.110.110/api/v1/verified/${this.user}/`;
+        const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
+        const response = this.http.get(url, {headers});
+
+
+        response.toPromise()
+        .then((resp: any) => {
+          if(resp.status === 'success') {
+            console.log(resp);
+            if(resp.data.verificado) {
               this.suscripcion.unsubscribe();
               alert.header = 'Bienvenido ' + this.user;
               alert.message = 'El correo fue validado correctamente.';
               alert.subHeader = null;
-              alert.buttons = [{text: 'Aceptar', handler: () => {this.router.navigate(['/']);}}];
+              alert.buttons = [
+                {
+                  text: 'Aceptar',
+                  handler: () => {
+                    alert.header = 'Registrarse';
+                    alert.message = null;
+                    alert.inputs = [
+                      {
+                        name: 'usuario',
+                        placeholder: 'Usuario',
+                        value: this.user,
+                        disabled: true,
+                      },
+                      {
+                        name: 'nombre',
+                        placeholder: 'Nombre',
+                      },
+                      {
+                        name: 'apellido',
+                        placeholder: 'Apellido',
+                      },
+                      {
+                        name: 'contrasena',
+                        placeholder: 'Contraseña',
+                        type: 'password',
+                      }
+                    ];
+                    alert.buttons = [
+                      {
+                        text: 'Confirmar',
+                        handler: data => {
+                          const postUrl = 'http://129.151.110.110/api/v1/crearalumno/';
+                          // eslint-disable-next-line max-len
+                          const postData = `usuario=${data.usuario}&contrasena=${data.contrasena}&nombre=${data.nombre}&apellido=${data.apellido}`;
+                          const respPost = this.http.post(postUrl, postData, {headers})
+                          .subscribe((respElem: any) => {
+                            if(respElem.status === 'success') {
+                              this.storage.set('user', data.usuario);
+                              this.storage.set('isLoged', true);
+                              alert.dismiss();
+                              this.router.navigate(['/']);
+                            } else {
+                              console.log(respElem);
+                              alert.subHeader = 'Error en los datos';
+                            }
+                          });
+                        }
+                      },
+                      {
+                        text: 'Cancelar',
+                        handler: () => {
+                          this.user = null;
+                          this.storage.remove('user');
+                          this.storage.set('isLoged', false);
+                          this.router.navigate(['/']);
+                        }
+                      }
+                    ];
+                    return false;
+                  }
+                }
+              ];
             } else {
               console.log('no validado');
             }
@@ -135,10 +201,10 @@ export class DuocLoginPage implements OnInit {
     await alert.present();
   }
 
-  private async checkValidity() {
-    const url = `http://129.151.110.110/api/v1/verified/${this.user}/`;
-    const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
-    const response = this.http.get(url, {headers});
-    return await response.toPromise();
-  }
+  // private async checkValidity() {
+  //   const url = `http://129.151.110.110/api/v1/verified/${this.user}/`;
+  //   const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
+  //   const response = this.http.get(url, {headers});
+  //   return await response.toPromise();
+  // }
 }

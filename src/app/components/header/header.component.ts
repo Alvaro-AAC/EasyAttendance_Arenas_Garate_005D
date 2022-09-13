@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { NavigationEnd, Router } from '@angular/router';
-// import { GlobalVarsService } from 'src/app/services/global-vars.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,16 +10,15 @@ export class HeaderComponent implements OnInit {
 
   // public isLoged = false;
 
-  constructor() { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
-    // this.router.events.subscribe((elem: any) => {
-    //   if (elem instanceof NavigationEnd) {
-    //     if(GlobalVarsService.loged === 'true') {
-    //       this.isLoged = true;
-    //     }
-    //   }
-    // });
+    this.router.events.subscribe((elem: any) => {
+      if (elem instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
+    });
   }
 
 }

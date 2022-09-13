@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { GlobalVarsService } from 'src/app/services/global-vars.service';
+import { Storage } from '@ionic/storage';
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.page.html',
@@ -8,23 +7,31 @@ import { GlobalVarsService } from 'src/app/services/global-vars.service';
 })
 export class InicioPage implements OnInit {
 
-  public logedBool;
-  public user;
+  public logedBool = this.storage.get('isLoged').then(elem => elem);
+  public user = this.storage.get('user').then(elem => elem);
 
-  constructor(private router: Router) { }
+  constructor(private storage: Storage) { }
 
   ngOnInit() {
-      this.router.events.subscribe((event: any) => {
-        if(event instanceof NavigationEnd) {
-          if(GlobalVarsService.loged === 'true') {
-            this.logedBool = true;
-            this.user = GlobalVarsService.user;
-          } else {
-            this.logedBool = false;
-            this.user = null;
+  }
+
+  async ionViewWillEnter() {
+    let a;
+    let b;
+    await this.storage.get('isLoged').then(elem => a = elem);
+    await this.logedBool.then(elem => b = elem);
+    this.storage.get('user').then(usuario => {
+      if (usuario === undefined) {
+        this.storage.get('isLoged').then(isLoged => {
+          if(isLoged) {
+            this.storage.set('isLoged', false);
           }
-        }
-      });
+        });
+      }
+    });
+    if(a !== b) {
+      window.location.reload();
+    }
   }
 
 }

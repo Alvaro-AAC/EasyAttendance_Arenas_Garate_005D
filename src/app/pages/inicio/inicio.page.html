@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="fondo">
-  <div *ngIf="logedBool; then loged else notLoged"></div>
+  <div *ngIf="logedBool | async; then loged else notLoged"></div>
     <ng-template #notLoged>
       <div id="centrar">
         <div>
@@ -19,7 +19,7 @@
     <ng-template #loged>
       <div id="centrar">
         <div>
-          <h1>Bienvenido {{user}}</h1>
+          <h1>Bienvenido {{user | async}}</h1>
           <img src="assets/logo.png" style="padding: 0; margin: 0;">
         </div>
         <ion-button routerLink="/horario" expand="block" fill="solid" shape="round" id="botonIngresar">

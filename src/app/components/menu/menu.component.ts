@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalVarsService } from 'src/app/services/global-vars.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 interface MenuItem {
     icon: string;
@@ -14,56 +15,80 @@ interface MenuItem {
 })
 export class MenuComponent implements OnInit {
 
-  public allMenuItems: MenuItem[] = [
-    {
-      icon: 'home-outline',
-      label: 'Inicio',
-      href: '/inicio'
-    },
-    {
-      icon: 'time-outline',
-      label: 'Horario',
-      href: '/horario'
-    },
-    {
-      icon: 'scan-circle-outline',
-      label: 'Escanear código QR',
-      href: '/scanner'
-    },
-    {
-      icon: 'clipboard-outline',
-      label: 'Asistencia',
-      href: '/asistencia'
-    },
-    {
-      icon: 'newspaper-outline',
-      label: 'Noticias',
-      href: '/noticias'
-    },
-    {
-      icon: 'information-circle-outline',
-      label: 'Ayuda',
-      href: '/ayuda'
-    },
-    {
-      icon: 'cog-outline',
-      label: 'Configuración',
-      href: '/config'
-    },
-  ];
+  public allMenuItems: MenuItem[];
 
-  public isLoged = false;
+  public isLoged = this.storage.get('isLoged');
 
-  public isDisabled = false;
-
-  constructor() { }
+  constructor(private storage: Storage, private router: Router) { }
 
   ngOnInit() {
-
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.storage.get('isLoged').then(elem => {
+          console.log(elem);
+          if (elem) {
+            this.allMenuItems = [
+              {
+                icon: 'home-outline',
+                label: 'Inicio',
+                href: '/inicio'
+              },
+              {
+                icon: 'time-outline',
+                label: 'Horario',
+                href: '/horario'
+              },
+              {
+                icon: 'scan-circle-outline',
+                label: 'Escanear código QR',
+                href: '/scanner'
+              },
+              {
+                icon: 'clipboard-outline',
+                label: 'Asistencia',
+                href: '/asistencia'
+              },
+              {
+                icon: 'newspaper-outline',
+                label: 'Noticias',
+                href: '/noticias'
+              },
+              {
+                icon: 'information-circle-outline',
+                label: 'Ayuda',
+                href: '/ayuda'
+              },
+              {
+                icon: 'cog-outline',
+                label: 'Configuración',
+                href: '/config'
+              },
+            ];
+          } else {
+            this.allMenuItems = [
+              {
+                icon: 'home-outline',
+                label: 'Inicio',
+                href: '/inicio'
+              },
+              {
+                icon: 'person-add-outline',
+                label: 'Registrarse',
+                href: '/duoc-login',
+              },
+            ];
+          }
+        });
+      }
+    });
   }
 
   public logout() {
-    GlobalVarsService.loged = 'false';
+    this.storage.set('isLoged', false).then(() => {
+      this.storage.remove('user').then(() => {
+        window.location.replace('/');
+      });
+    });
   }
 
 }

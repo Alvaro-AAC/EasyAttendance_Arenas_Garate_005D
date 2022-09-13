@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavigationStart, Router, NavigationEnd } from '@angular/router';
-import { MenuController } from '@ionic/angular';
-import { GlobalVarsService } from './services/global-vars.service';
+import { NavigationStart, Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,12 @@ import { GlobalVarsService } from './services/global-vars.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public static loged;
-  public static logedBool;
-  public static user;
 
   public hasHeader: boolean;
   public exemptUrl = ['/inicio', '/', '/login', '/duoc-login'];
 
-  constructor(private router: Router, private menu: MenuController) {
+  constructor(private router: Router, private storage: Storage) {
+    this.storage.create();
     this.router.events.subscribe((event: any) => {
       if(event instanceof NavigationStart) {
         this.hasHeader = true;
@@ -24,16 +21,6 @@ export class AppComponent {
           if(event.url === url) {
             this.hasHeader = false;
           }
-        }
-        this.menu.close('miMenu');
-      }
-      if(event instanceof NavigationEnd) {
-        AppComponent.loged = GlobalVarsService.loged;
-        if(AppComponent.loged === 'true') {
-          AppComponent.logedBool = true;
-          AppComponent.user = GlobalVarsService.user;
-        } else {
-          AppComponent.logedBool = false;
         }
       }
     });
