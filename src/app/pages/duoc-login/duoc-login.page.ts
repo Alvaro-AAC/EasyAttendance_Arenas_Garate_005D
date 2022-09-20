@@ -21,9 +21,9 @@ export class DuocLoginPage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     private storage: Storage,
-    ) {
+  ) {
 
-    }
+  }
 
   ngOnInit() {
   }
@@ -61,13 +61,9 @@ export class DuocLoginPage implements OnInit {
       }
       alert.subHeader = 'Tiempo: 0' + tiempoMins + ':' + parsedSeconds;
       if(val%5 === 0) {
-
-
         const url = `http://129.151.110.110/api/v1/verified/${this.user}/`;
         const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
         const response = this.http.get(url, {headers});
-
-
         response.toPromise()
         .then((resp: any) => {
           if(resp.status === 'success') {
@@ -111,7 +107,7 @@ export class DuocLoginPage implements OnInit {
                           const postUrl = 'http://129.151.110.110/api/v1/crearalumno/';
                           // eslint-disable-next-line max-len
                           const postData = `usuario=${data.usuario}&contrasena=${data.contrasena}&nombre=${data.nombre}&apellido=${data.apellido}`;
-                          const respPost = this.http.post(postUrl, postData, {headers})
+                          this.http.post(postUrl, postData, {headers})
                           .subscribe((respElem: any) => {
                             if(respElem.status === 'success') {
                               this.storage.set('user', data.usuario);
@@ -167,6 +163,7 @@ export class DuocLoginPage implements OnInit {
   }
 
   public login() {
+    this.user = this.user.toLowerCase();
     if(this.user === '') {
       this.presentAlert('Campo vacío', 'Debe ingresar los datos solicitados en los campos que se muestran en pantalla.');
       return false;
