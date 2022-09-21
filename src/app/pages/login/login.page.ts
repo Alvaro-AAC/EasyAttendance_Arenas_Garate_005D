@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
 
   login() {
     const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
-    const postUrl = 'http://localhost:8000/api/v1/login/';
+    const postUrl = 'http://129.151.110.110/api/v1/login/';
     const postData = `user=${this.user}&pwd=${this.pwd}`;
     this.http.post(postUrl, postData, {headers})
       .subscribe(async (elem: any) => {
@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
           const alerta = this.presentAlert('Sesión iniciada', 'Usted ha iniciado sesión correctamente');
           alerta.then(async (event: any) => {
             // eslint-disable-next-line max-len
-            this.http.post('http://localhost:8000/api/v1/generar_codigo_alumno/', `username=${this.user}`, {headers}).subscribe((token: any) => {
+            this.http.post('http://129.151.110.110/api/v1/generar_codigo_alumno/', `username=${this.user}`, {headers}).subscribe((token: any) => {
               if(token.status === 'success') {
                 this.storage.set('token', token.data.token).then(() => {
                   event.buttons = [{
