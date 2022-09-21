@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
@@ -16,7 +17,8 @@ export class LoginPage implements OnInit {
   constructor(
     private http: HttpClient,
     private alertController: AlertController,
-    private storage: Storage
+    private storage: Storage,
+    private router: Router,
     ) { }
 
   ngOnInit() {
@@ -44,10 +46,24 @@ export class LoginPage implements OnInit {
                   event.buttons = [{
                     text: 'Aceptar',
                     handler: () => {
-                      window.location.replace('/');
+                      this.router.navigate(['/']);
                     }
                   }];
                 });
+              } else {
+                console.log(token);
+                event.buttons = [{
+                  text: 'Reintentar',
+                  handler: () => {
+                    this.login();
+                  }
+                },
+                {
+                  text: 'Cancelar',
+                  handler: () => {
+                    this.router.navigate(['/']);
+                  }
+                }];
               }
             });
           });

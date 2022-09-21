@@ -11,14 +11,28 @@
 
   <ion-item *ngFor="let item of menuItemToggle" class="menuopt">
     <ion-icon slot="start" [name]="item.icon"></ion-icon>
-    <ion-label [id]="item.id">{{item.label}}</ion-label>
-    <ion-toggle slot="end" color="primary"></ion-toggle>
+    <ion-label>{{item.label}}</ion-label>
+    <ion-toggle
+      slot="end"
+      color="primary"
+      (ionChange)="handleChange($event)"
+      [id]="item.id"
+      [checked]="(item.checked | async) || (item.id === 'darkmode')"
+      [disabled]="item.disabled"
+    >
+    </ion-toggle>
   </ion-item>
 
   <ion-item class="menuopt">
     <ion-icon slot="start" name="notifications"></ion-icon>
     <ion-label>Notificaciones</ion-label>
-    <ion-select value="na" multiple="false" placeholder="Selecciona la configuracion">
+    <ion-select
+      id="notif"
+      [value]="periodoNotif | async"
+      multiple="false"
+      placeholder="Selecciona la configuracion"
+      (ionChange)="handleChange($event)"
+    >
       <ion-select-option value="na">Nunca</ion-select-option>
       <ion-select-option value="diaria">Diarias</ion-select-option>
       <ion-select-option value="semanal">Semanal</ion-select-option>
