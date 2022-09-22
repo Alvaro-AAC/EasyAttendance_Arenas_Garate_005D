@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 interface Dia {
   codigo: string;
   nombre: string;
-  horas?: Horario[];
+  horas: Horario[];
+  disabled: boolean;
 }
 
 interface Horario {
@@ -20,64 +24,133 @@ interface Horario {
 })
 export class HorarioPage implements OnInit {
 
-  public horariosLun: Horario[] = [
-    {
-      nombre: 'ARQUITECTURA',
-      ini: '16:01',
-      fin: '17:20',
-      codigo: 'ASY4131'
-    },
-    {
-      nombre: 'INGLES INTERMEDIO',
-      ini: '17:30',
-      fin: '18:50',
-      codigo: 'INI5111'
-    },
-  ];
+  public horariosLun: Horario[] = [];
 
-  public horariosMar: Horario[] = [
-    {
-      nombre: 'ESTADISTICA DESCRIPTIVA',
-      ini: '11:31',
-      fin: '12:50',
-      codigo: 'MAT4140'
-    },
-    {
-      nombre: 'CALIDAD DE SOFTWARE',
-      ini: '13:01',
-      fin: '14:20',
-      codigo: 'CSY4111'
-    },
-    {
-      nombre: 'PROCESO DE PORTAFOLIO',
-      ini: '14:31',
-      fin: '15:50',
-      codigo: 'APY4461'
-    },
-    {
-      nombre: 'ETICA PARA EL TRABAJO',
-      ini: '16:01',
-      fin: '17:20',
-      codigo: 'EAY4470'
-    },
-  ];
+  public horariosMar: Horario[] = [];
+
+  public horariosMie: Horario[] = [];
+
+  public horariosJue: Horario[] = [];
+
+  public horariosVie: Horario[] = [];
+
+  public horariosSab: Horario[] = [];
 
   public dias: Dia[] = [
     {
-      codigo: 'L',
+      codigo: 'LUN',
       nombre: 'Lunes',
       horas: this.horariosLun,
+      disabled: false,
     },
     {
-      codigo: 'M',
+      codigo: 'MAR',
       nombre: 'Martes',
       horas: this.horariosMar,
+      disabled: false,
+    },
+    {
+      codigo: 'MIE',
+      nombre: 'Miercoles',
+      horas: this.horariosMie,
+      disabled: false,
+    },
+    {
+      codigo: 'JUE',
+      nombre: 'Jueves',
+      horas: this.horariosJue,
+      disabled: false,
+    },
+    {
+      codigo: 'VIE',
+      nombre: 'Viernes',
+      horas: this.horariosVie,
+      disabled: false,
+    },
+    {
+      codigo: 'SAB',
+      nombre: 'Sabado',
+      horas: this.horariosSab,
+      disabled: false,
     },
   ];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private storage: Storage,
+  ) {
+
+  }
 
   ngOnInit() {
+    this.storage.get('token').then(token => {
+      // eslint-disable-next-line max-len
+      this.http.get('http://localhost:8000/api/v1/horario/' + '2fTPPt1Q8t0KVTiPGzOnQj7KlGIo8zcIZSIKJy1rAp7EXcJFPAle1e1EyS_uR5SzgHWo0IFUfOdaB0SqK3JAHNZPgCyj85GPgMh5M9Jsv-NIFEmnx3GmdRaNKbmPoCSzw-4b6A' + '/?format=json').toPromise()
+      .then((data: any) => {
+        data.forEach(hora => {
+          const nombre = hora.seccion_id.ramo_id.descripcion;
+          const ini = hora.modulo_id.hora_ini.substring(0, 5);
+          const fin = hora.modulo_id.hora_fin.substring(0, 5);
+          const codigo = hora.seccion_id.ramo_id.codigo_letra + hora.seccion_id.ramo_id.codigo_numero;
+          switch (hora.dia) {
+            case 'LUN':
+              this.horariosLun.push(<Horario>{
+                nombre,
+                ini,
+                fin,
+                codigo
+              });
+              break;
+            case 'MAR':
+              this.horariosMar.push(<Horario>{
+                nombre,
+                ini,
+                fin,
+                codigo
+              });
+              break;
+            case 'MIE':
+              this.horariosMie.push(<Horario>{
+                nombre,
+                ini,
+                fin,
+                codigo
+              });
+              break;
+            case 'JUE':
+              this.horariosJue.push(<Horario>{
+                nombre,
+                ini,
+                fin,
+                codigo
+              });
+              break;
+            case 'VIE':
+              this.horariosVie.push(<Horario>{
+                nombre,
+                ini,
+                fin,
+                codigo
+              });
+              break;
+            case 'SAB':
+              this.horariosSab.push(<Horario>{
+                nombre,
+                ini,
+                fin,
+                codigo
+              });
+              break;
+          }
+        });
+      }).finally(() => {
+        for(const dia of this.dias) {
+          if(dia.horas.length === 0) {
+            dia.disabled = true;
+          }
+        }
+      });
+    });
   }
 
 }

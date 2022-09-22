@@ -5,7 +5,7 @@
 
 <ion-content [fullscreen]="true" id="fondo">
   <ion-list *ngFor="let dia of dias" class="lista">
-    <ion-item-divider class="titular">
+    <ion-item-divider class="titular" *ngIf="!dia.disabled">
       <ion-label>{{dia.nombre}}</ion-label>
     </ion-item-divider>
     <ion-item *ngFor="let horas of dia.horas" class="itemhora">
