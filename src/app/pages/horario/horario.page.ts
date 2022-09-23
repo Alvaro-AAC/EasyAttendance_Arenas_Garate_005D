@@ -85,7 +85,7 @@ export class HorarioPage implements OnInit {
   ngOnInit() {
     this.storage.get('token').then(token => {
       // eslint-disable-next-line max-len
-      this.http.get('http://129.151.110.110/api/v1/horario/' + '2fTPPt1Q8t0KVTiPGzOnQj7KlGIo8zcIZSIKJy1rAp7EXcJFPAle1e1EyS_uR5SzgHWo0IFUfOdaB0SqK3JAHNZPgCyj85GPgMh5M9Jsv-NIFEmnx3GmdRaNKbmPoCSzw-4b6A' + '/?format=json').toPromise()
+      this.http.get('http://129.151.110.110/api/v1/horario/' + token + '/?format=json').toPromise()
       .then((data: any) => {
         data.forEach(hora => {
           const nombre = hora.seccion_id.ramo_id.descripcion;
