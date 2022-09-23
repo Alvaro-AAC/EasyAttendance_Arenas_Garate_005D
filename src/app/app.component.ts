@@ -28,20 +28,20 @@ export class AppComponent {
         }
       }
     });
-    this.storage.get('huella').then(huella => {
-      if(huella) {
-        this.fillData().then(() => {
-          this.platform.pause.subscribe(async () => {
-            await this.storage.remove('user');
-            await this.storage.set('isLoged', false);
-          });
-          this.platform.resume.subscribe(async () => {
-            await this.storage.set('isLoged', true);
-            await this.storage.set('user', this.user);
-          });
-        });
-      }
-    });
+    // this.storage.get('huella').then(huella => {
+    //   if(huella) {
+    //     this.fillData().then(() => {
+    //       this.platform.pause.subscribe(async () => {
+    //         await this.storage.remove('user');
+    //         await this.storage.set('isLoged', false);
+    //       });
+    //       this.platform.resume.subscribe(async () => {
+    //         await this.storage.set('isLoged', true);
+    //         await this.storage.set('user', this.user);
+    //       });
+    //     });
+    //   }
+    // });
   }
 
   async fillData() {
