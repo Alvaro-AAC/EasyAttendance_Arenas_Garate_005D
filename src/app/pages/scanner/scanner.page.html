@@ -3,11 +3,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" id="fondo">
+<ion-content [fullscreen]="true" id="fondoEsp" class="fondo">
   <h1 class="ion-text-center">Escanear QR</h1>
   <br><br><br>
   <div class="ion-text-center">
-    <ion-button fill="outline" shape="round" color="light" (click)="abrir(true)">
+    <ion-button fill="outline" shape="round" color="light" (click)="startScan()" id="boton">
       Iniciar escaneo
     </ion-button>
   </div>

@@ -18,3 +18,12 @@
     text-align: center;
   }
 }
+
+.fondoInvisible {
+  --background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.fondo {
+  --background: #002B5B;
+  margin-top: 50px;
+}

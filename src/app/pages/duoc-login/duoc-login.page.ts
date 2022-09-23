@@ -112,6 +112,10 @@ export class DuocLoginPage implements OnInit {
                             if(respElem.status === 'success') {
                               this.storage.set('user', data.usuario);
                               this.storage.set('isLoged', true);
+                              // eslint-disable-next-line max-len
+                              this.http.post('http://129.151.110.110/api/v1/generar_codigo_alumno/', `username=${this.user}`, {headers}).subscribe((token: any) => {
+                                this.storage.set('token', token.data.token);
+                              });
                               alert.dismiss();
                               this.router.navigate(['/']);
                             } else {
