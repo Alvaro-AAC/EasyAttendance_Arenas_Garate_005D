@@ -12,14 +12,36 @@ export class AppComponent {
 
   public hasHeader: boolean;
   public exemptUrl = ['/inicio', '/', '/login', '/duoc-login'];
+  public perm = true;
   private user;
   private token;
   private isLoged;
+
+  private isLogedUrls = ['/login', '/duoc-login'];
+  private notLogedUrls = ['/asistencia', '/horario', '/noticias', '/config', '/scanner', '/ayuda'];
 
   constructor(private router: Router, private storage: Storage, private platform: Platform) {
     this.storage.create();
     this.router.events.subscribe((event: any) => {
       if(event instanceof NavigationStart) {
+        for (const url of this.isLogedUrls) {
+          if(event.url === url) {
+            this.storage.get('isLoged').then(loged => {
+              if(loged) {
+                this.router.navigate(['/']);
+              }
+            })
+          }
+        }
+        for (const url of this.notLogedUrls) {
+          if(event.url === url) {
+            this.storage.get('isLoged').then(loged => {
+              if(!loged) {
+                this.router.navigate(['/']);
+              }
+            })
+          }
+        }
         this.hasHeader = true;
         for(const url of this.exemptUrl) {
           if(event.url === url) {

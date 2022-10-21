@@ -4,6 +4,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="fondo">
+  <h1 *ngIf="empty" class="ion-text-center">No tiene horarios registrados</h1>
   <ion-list *ngFor="let dia of dias" class="lista">
     <ion-item-divider class="titular" *ngIf="!dia.disabled">
       <ion-label>{{dia.nombre}}</ion-label>

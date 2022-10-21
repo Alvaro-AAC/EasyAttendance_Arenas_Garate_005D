@@ -5,6 +5,7 @@
 
 <ion-content [fullscreen]="true" id="fondo">
 
+  <h1 *ngIf="empty" class="ion-text-center">No tiene asistencias <br>registradas</h1>
   <ion-accordion-group>
     <ion-accordion *ngFor="let acc of acordiones" [value]="acc.valor">
       <ion-item slot="header">

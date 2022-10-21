@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { ServicedatosService } from 'src/app/services/servicedatos.service';
 
 @Component({
   selector: 'app-duoc-login',
@@ -21,6 +22,7 @@ export class DuocLoginPage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     private storage: Storage,
+    private datos: ServicedatosService,
   ) {
 
   }
@@ -61,24 +63,21 @@ export class DuocLoginPage implements OnInit {
       }
       alert.subHeader = 'Tiempo: 0' + tiempoMins + ':' + parsedSeconds;
       if(val%5 === 0) {
-        const url = `http://129.151.110.110/api/v1/verified/${this.user}/`;
-        const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
-        const response = this.http.get(url, {headers});
-        response.toPromise()
+        
+        this.datos.register(this.user)
         .then((resp: any) => {
           if(resp.status === 'success') {
-            console.log(resp);
             if(resp.data.verificado) {
               this.suscripcion.unsubscribe();
               alert.header = 'Bienvenido ' + this.user;
               alert.message = 'El correo fue validado correctamente.';
-              alert.subHeader = null;
+              alert.subHeader = undefined;
               alert.buttons = [
                 {
                   text: 'Aceptar',
                   handler: () => {
                     alert.header = 'Registrarse';
-                    alert.message = null;
+                    alert.message = undefined;
                     alert.inputs = [
                       {
                         name: 'usuario',
@@ -104,16 +103,14 @@ export class DuocLoginPage implements OnInit {
                       {
                         text: 'Confirmar',
                         handler: data => {
-                          const postUrl = 'http://129.151.110.110/api/v1/crearalumno/';
-                          // eslint-disable-next-line max-len
-                          const postData = `usuario=${data.usuario}&contrasena=${data.contrasena}&nombre=${data.nombre}&apellido=${data.apellido}`;
-                          this.http.post(postUrl, postData, {headers})
-                          .subscribe((respElem: any) => {
+                          console.log(data);
+                          this.datos.crearuser(data.usuario, data.contrasena, data.nombre, data.apellido)
+                          .then((respElem: any) => {
                             if(respElem.status === 'success') {
                               this.storage.set('user', data.usuario);
                               this.storage.set('isLoged', true);
                               // eslint-disable-next-line max-len
-                              this.http.post('http://129.151.110.110/api/v1/generar_codigo_alumno/', `username=${this.user}`, {headers}).subscribe((token: any) => {
+                              this.datos.generarcodigo(this.user).then((token: any) => {
                                 this.storage.set('token', token.data.token);
                               });
                               alert.dismiss();
@@ -128,7 +125,7 @@ export class DuocLoginPage implements OnInit {
                       {
                         text: 'Cancelar',
                         handler: () => {
-                          this.user = null;
+                          this.user = '';
                           this.storage.remove('user');
                           this.storage.set('isLoged', false);
                           this.router.navigate(['/']);
@@ -140,10 +137,10 @@ export class DuocLoginPage implements OnInit {
                 }
               ];
             } else {
-              console.log('no validado');
+              console.log('no validado dentro');
             }
           } else {
-            console.log('no validado');
+            console.log('no validado fuera');
           }
         })
         .catch(error => {
@@ -172,24 +169,24 @@ export class DuocLoginPage implements OnInit {
       this.presentAlert('Campo vacío', 'Debe ingresar los datos solicitados en los campos que se muestran en pantalla.');
       return false;
     }
-    const url = 'http://129.151.110.110/api/v1/generar_codigo_login/';
-    const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
-    const response = this.http.post(url, `username=${this.user}&auth=z_gHXCkfMAuv703l_F2J6`, {headers});
-    response.pipe().subscribe((elem: any) => {
-      if(elem.status === 'success') {
-        const token = elem.data.token;
-        this.showAlert();
-      } else if (elem.status === 'unauthorized') {
-        this.presentAlert('No autorizado', 'Su acceso no está autorizado a este servicio, lo sentimos.');
-      } else if (elem.status === 'existe') {
-        this.presentAlert('Usuario ya registrado', 'El usuario que usted ha ingresado ya ha sido registrado.');
-      }
-      else if (elem.status === 'errorvalidacion') {
-        this.presentAlert('Usuario no válido', 'El usuario que usted ha ingresado no coincide con el formato utilizado por Duoc.');
-      }
-      else {
-        console.log('error');
-      }
+    this.datos.codelogin(this.user).then((obs: any) => {
+      obs.subscribe(elem => {
+        if(elem.status === 'success') {
+          const token = elem.data.token;
+          this.showAlert();
+        } else if (elem.status === 'unauthorized') {
+          this.presentAlert('No autorizado', 'Su acceso no está autorizado a este servicio, lo sentimos.');
+        } else if (elem.status === 'existe') {
+          this.presentAlert('Usuario ya registrado', 'El usuario que usted ha ingresado ya ha sido registrado.');
+        }
+        else if (elem.status === 'errorvalidacion') {
+          this.presentAlert('Usuario no válido', 'El usuario que usted ha ingresado no coincide con el formato utilizado por Duoc.');
+        }
+        else {
+          console.log('error');
+        }
+      });
+      
     });
   }
 

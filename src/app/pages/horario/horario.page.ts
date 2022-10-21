@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { ServicedatosService } from 'src/app/services/servicedatos.service';
 
 interface Dia {
   codigo: string;
@@ -23,6 +24,8 @@ interface Horario {
   styleUrls: ['./horario.page.scss'],
 })
 export class HorarioPage implements OnInit {
+
+  public empty = false;
 
   public horariosLun: Horario[] = [];
 
@@ -78,6 +81,7 @@ export class HorarioPage implements OnInit {
   constructor(
     private http: HttpClient,
     private storage: Storage,
+    private datos: ServicedatosService
   ) {
 
   }
@@ -85,7 +89,7 @@ export class HorarioPage implements OnInit {
   ngOnInit() {
     this.storage.get('token').then(token => {
       // eslint-disable-next-line max-len
-      this.http.get('http://129.151.110.110/api/v1/horario/' + token + '/?format=json').toPromise()
+      this.datos.horario(token)
       .then((data: any) => {
         data.forEach(hora => {
           const nombre = hora.seccion_id.ramo_id.descripcion;
@@ -144,10 +148,15 @@ export class HorarioPage implements OnInit {
           }
         });
       }).finally(() => {
+        let cont = 0;
         for(const dia of this.dias) {
           if(dia.horas.length === 0) {
             dia.disabled = true;
+            cont += 1;
           }
+        }
+        if(cont === 6) {
+          this.empty = true;
         }
       });
     });

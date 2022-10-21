@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
+import { ServicedatosService } from 'src/app/services/servicedatos.service';
 interface Acordion {
   valor: string;
   label: string;
@@ -18,30 +17,20 @@ interface Acordion {
 })
 export class AsistenciaPage implements OnInit {
 
-  public acordiones: Acordion[] = [
-  ];
+  public empty = false;
+
+  public acordiones: Acordion[] = [];
 
   private token = this.storage.get('token');
 
   constructor(
-    private http: HttpClient,
-    private storage: Storage,
+    private datos: ServicedatosService,
+    private storage: Storage
   ) { }
 
   ngOnInit() {
-    // eslint-disable-next-line max-len
-    this.token.then(token => {
-      this.http.get(`http://129.151.110.110/api/v1/asistencia/${token}/`).toPromise().then(response => {
-        Object.entries(response).forEach(elem => {
-          this.acordiones.push(<Acordion>{
-            valor: elem[1].descripcion,
-            label: elem[1].descripcion,
-            numtotal: elem[1].total,
-            numasist: elem[1].presente,
-            porcentaje: Number.parseFloat(((elem[1].presente/elem[1].total)*100).toPrecision(2))
-          });
-        });
-      });
+    this.token.then(toke => {
+      this.acordiones = this.datos.asis(toke, this.acordiones);
     });
   }
 
