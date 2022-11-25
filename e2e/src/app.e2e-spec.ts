@@ -7,8 +7,24 @@ describe('new App', () => {
     page = new AppPage();
   });
 
-  it('should be blank', () => {
+  it('Prueba iolabel', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toContain('Start with Ionic UI Components');
+    expect(page.getiolabel()).toContain('¡Listo! Ya quedaste presente');
+  });
+  it('Prueba selecconfig', () => {
+    page.navigateTo();
+    expect(page.getpruebaselec()).toContain('Nunca');
+  });
+  it('Prueba selecnotice', () => {
+    page.navigateTo();
+    expect(page.getnoticias()).toContain('@DuocUC');
+  });
+  it('Prueba scann', () => {
+    page.navigateTo();
+    expect(page.getscanner()).toContain('Cerrar');
+  });
+  it('Prueba labelogin', () => {
+    page.navigateTo();
+    expect(page.getlabel()).toContain('Iniciar con DuocUC');
   });
 });
